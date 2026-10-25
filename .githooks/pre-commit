@@ -1,0 +1,37 @@
+#!/bin/sh
+#
+# Repository-local pre-commit hook.
+#
+# 1. Reject staged whitespace errors using git's own `git diff --cached --check`.
+#    It reports trailing whitespace and new blank lines at end of file for staged
+#    content only; unstaged working-tree edits are ignored by this gate.
+# 2. Run `npm run typecheck` from the repository root. Typechecking reads the
+#    working tree (including unstaged changes), not the staged snapshot. It needs
+#    Node.js, npm, and the project's installed dependencies. A missing script,
+#    missing tool, or failed check rejects the commit.
+#
+# `npm run check` remains the authoritative full check; this hook does not run
+# tests or generated-reference checks. Install/build/test commands do not
+# activate hooks.
+#
+# Opt in (does not modify tracked or global configuration):
+#   git config core.hooksPath .githooks
+# See README.md for activation and how to preserve any existing hooks.
+
+if ! git diff --cached --check; then
+    printf '\npre-commit: staged changes contain whitespace errors (listed above).\n' >&2
+    printf 'Fix the reported lines, re-stage them, and commit again.\n' >&2
+    exit 1
+fi
+
+if ! cd "$(git rev-parse --show-toplevel)"; then
+    printf '\npre-commit: could not locate the repository root for typechecking.\n' >&2
+    exit 1
+fi
+
+# --if-present=false overrides an inherited npm `if-present` setting, so a
+# missing typecheck script is an error rather than a silent success.
+if ! npm run --if-present=false typecheck; then
+    printf '\npre-commit: typecheck failed (npm run typecheck). Fix the errors and commit again.\n' >&2
+    exit 1
+fi

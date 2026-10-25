@@ -1,0 +1,9 @@
+{
+  "runtimeDirectory": "vendor/GDRE_tools",
+  "targetVersion": "2.8.0-beta.2",
+  "timeouts": {
+    "maxMs": 3600000
+  },
+  "defaults": {},
+  "settings": {}
+}

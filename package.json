@@ -1,0 +1,29 @@
+{
+  "name": "godot-gdre-mcp",
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": "^24.0.0"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "start": "node dist/src/index.js",
+    "test": "npm run build && node --test dist/test/*.test.js",
+    "reference": "npm run reference:generate",
+    "reference:generate": "npm run build && node dist/src/reference-cli.js write",
+    "reference:check": "npm run build && node dist/src/reference-cli.js check",
+    "check": "npm run typecheck && npm test && npm run reference:check"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/client": "2.3.1",
+    "@modelcontextprotocol/server": "2.3.1",
+    "zod": "^4.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.19.2",
+    "typescript": "5.9.3"
+  }
+}

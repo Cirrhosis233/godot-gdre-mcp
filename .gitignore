@@ -1,0 +1,49 @@
+# Local agent guidance, harness settings, plans, and investigation records.
+/AGENTS.md
+/CLAUDE.md
+/.claude/
+/docs/agents/
+/.scratch/
+/gdre-claude-integration-handoff.md
+
+# Operation records if a local workspace is placed inside this checkout.
+.gdre/
+
+# Privately provisioned runtime; keep binary payloads out of Git.
+/vendor/GDRE_tools/
+native/*.dll
+
+# Installed dependencies and local package-manager caches.
+node_modules/
+.npm/
+.pnpm-store/
+
+# Logs and Node.js diagnostic reports.
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# Generated builds and incremental compiler state.
+/dist/
+/build/
+*.tsbuildinfo
+
+# Test coverage and tool caches.
+coverage/
+.nyc_output/
+.cache/
+.eslintcache
+.prettiercache
+
+# Local environment values; keep sanitized examples trackable.
+.env
+.env.*
+!.env.example
+!.env.*.example
+gdre-mcp.config.json
+
+# Keep dependency lockfiles tracked for reproducible installs.
